@@ -4,6 +4,8 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const eventRoutes = require("./routes/event.routes");
 
+const expenseRoutes = require("./routes/expense.routes");
+
 const app = express();
 
 // Global middlewares
@@ -21,5 +23,7 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
+
+app.use("/events", expenseRoutes);
 
 module.exports = app;
