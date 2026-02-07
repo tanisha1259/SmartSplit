@@ -5,6 +5,7 @@ const authRoutes = require("./routes/auth.routes");
 const eventRoutes = require("./routes/event.routes");
 
 const expenseRoutes = require("./routes/expense.routes");
+const lentRoutes = require("./routes/lent.routes");
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 
 app.use("/events", expenseRoutes);
+app.use("/events", lentRoutes);
 
 module.exports = app;
