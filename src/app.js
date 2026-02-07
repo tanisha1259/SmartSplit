@@ -28,5 +28,4 @@ app.use("/events", eventRoutes);
 app.use("/events", expenseRoutes);
 app.use("/events", lentRoutes);
 
-
 module.exports = app;
