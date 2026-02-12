@@ -46,4 +46,45 @@ const calculateEventBalances = async (eventId) => {
   return balances;
 };
 
-module.exports = { calculateEventBalances };
+const simplifyBalances = (balances) => {
+  const creditors = [];
+  const debtors = [];
+
+  // Separate creditors and debtors
+  Object.entries(balances).forEach(([userId, amount]) => {
+    if (amount > 0) {
+      creditors.push({ userId, amount });
+    } else if (amount < 0) {
+      debtors.push({ userId, amount: -amount }); // convert to positive
+    }
+  });
+
+  const settlements = [];
+
+  let i = 0;
+  let j = 0;
+
+  while (i < debtors.length && j < creditors.length) {
+    const debtor = debtors[i];
+    const creditor = creditors[j];
+
+    const payment = Math.min(debtor.amount, creditor.amount);
+
+    settlements.push({
+      from: debtor.userId,
+      to: creditor.userId,
+      amount: payment,
+    });
+
+    debtor.amount -= payment;
+    creditor.amount -= payment;
+
+    if (debtor.amount === 0) i++;
+    if (creditor.amount === 0) j++;
+  }
+
+  return settlements;
+};
+
+module.exports = { calculateEventBalances, simplifyBalances };
+
